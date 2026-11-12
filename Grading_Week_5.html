@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang= "en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slider Central</title>
+</head>
+<body>
+
+    <input id="freq" type="range" min="1" max="20" value="1"><label id="freqDisplay">Pitch SLider</label>
+    <input id="freq2" type="range" min="1" max="20" value="1"><label id="freq2Display">Pitch SLider2</label>
+    <input id="freq3" type="range" min="1" max="20" value="1"><label id="freq3Display">Pitch SLider3</label>
+        <input id="freq4" type="range" min="20" max="1500" value="1"><label id="freq4Display">Slidey Pitch Slider</label>
+    <input id="gain" type="range" min="0" max="1" step="0.1" value="0.2"><label id="gainDisplay">Gain Slider</label>
+    <input id="gain2" type="range" min="0" max="1" step="0.1" value="0.2"><label id="gain2Display">Gain Slider2</label>
+    <input id="gain3" type="range" min="0" max="1" step="0.1" value="0.2"><label id="gain3Display">Gain Slider3</label>
+    <input id="gain4" type="range" min="0" max="1" step="0.1" value="0.2"><label id="gain4Display">Slidey Gain Slider4</label>
+    <script>
+        const ctx = new AudioContext();
+        ctx.suspend();
+
+        const osc1 = new OscillatorNode(ctx);
+        let freq = 110;
+        osc1.type = "triangle";
+
+        const osc2 = new OscillatorNode(ctx);
+        let freq2 = 55;
+        osc2.type = "triangle";
+
+        const osc3 = new OscillatorNode(ctx);
+        let freq3 = 80;
+        osc3.type = "triangle";
+
+        const gain = new GainNode(ctx);
+        gain.gain.value = 0.2;
+
+        const gain2 = new GainNode(ctx);
+        gain2.gain.value = 0.2;
+
+        const gain3 = new GainNode(ctx);
+        gain3.gain.value = 0.2;
+
+        const gain4 = new GainNode(ctx);
+        gain4.gain.value = 0.2;
+
+        osc1.connect(gain);
+        osc2.connect(gain2);
+        osc3.connect(gain3);
+        const osc4 = new OscillatorNode(ctx);
+        let freq4 = 100;
+        osc4.type = "triangle";
+        osc4.connect(gain4);
+        gain.connect(ctx.destination);
+        gain2.connect(ctx.destination);
+        gain3.connect(ctx.destination);
+        gain4.connect(ctx.destination);
+        osc4.start();
+        osc1.start();
+        osc2.start();
+        osc3.start();
+
+        const slider1 = document.querySelector("#freq");
+        slider1.addEventListener("input", () => {
+            ctx.resume();
+            osc1.frequency.value = freq * (Number(slider1.value));
+            document.querySelector("#freqDisplay").textContent = slider1.value;
+        });
+
+        const slider4 = document.querySelector("#freq2");
+        slider4.addEventListener("input", () => {
+            ctx.resume();   
+            osc2.frequency.value = freq2 * (Number(slider4.value));
+            document.querySelector("#freq2Display").textContent = slider4.value;
+        });
+
+        const slider5 = document.querySelector("#freq3");
+        slider5.addEventListener("input", () => {
+            ctx.resume();
+            osc3.frequency.value = freq3 * (Number(slider5.value));
+            document.querySelector("#freq3Display").textContent = slider5.value;
+        });
+
+        const slider2 = document.querySelector("#gain");
+        slider2.addEventListener("input", () => {
+            ctx.resume();
+            gain.gain.value = Number(slider2.value);
+            document.querySelector("#gainDisplay").textContent = slider2.value;
+        });
+
+        const slider3 = document.querySelector("#gain2");
+        slider3.addEventListener("input", () => {
+            ctx.resume();
+            gain2.gain.value = Number(slider3.value);
+            document.querySelector("#gain2Display").textContent = slider3.value;
+        });
+        const slider6 = document.querySelector("#gain3");
+        slider6.addEventListener("input", () => {
+            ctx.resume();
+            gain3.gain.value = Number(slider6.value);
+            document.querySelector("#gain3Display").textContent = slider6.value;
+        });
+        const slider7 = document.querySelector("#gain4");
+        slider7.addEventListener("input", () => {
+            ctx.resume();
+            gain4.gain.value = Number(slider7.value);
+            document.querySelector("#gain4Display").textContent = slider7.value;
+        });
+        const slider8 = document.querySelector("#freq4");
+        slider8.addEventListener("input", () => {
+            ctx.resume();
+            osc4.frequency.value = freq4 = Number(slider8.value);
+            document.querySelector("#freq4Display").textContent = slider8.value;
+        });
+    </script>
+
+
+
+
+
+</body>
+</html>
